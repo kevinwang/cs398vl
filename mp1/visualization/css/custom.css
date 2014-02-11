@@ -1,0 +1,49 @@
+body {
+  padding-top: 50px;
+}
+.greeting {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+#content {
+    margin:auto;
+}
+
+.bar {
+    cursor: pointer;
+}
+
+.bar.positive {
+    fill: green;
+}
+
+.bar.negative {
+    fill: darkred;
+}
+
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.word {
+    fill: grey;
+    cursor: pointer;
+}
+
+#word {
+    text-align: center;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2.5px;
+}
