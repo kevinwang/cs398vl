@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- custom CSS rules to make your visualization pretty! -->
-<link rel="stylesheet" href="/css/custom.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="{{ site.baseurl }}/css/custom.css" type="text/css" media="screen" />
 </head>
 <body>
 <!-- Navigation bar -->
@@ -21,13 +21,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">CS 398 VL</a>
+            <a class="navbar-brand" href="{{ site.baseurl }}/">CS 398 VL</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li {% if page.url == '/index.html' %}class="active"{% endif %}><a href="/">Home</a></li>
-                <li {% if page.url == '/mp1/index.html' %}class="active"{% endif %}><a href="/mp1/">MP1</a></li>
-                {% comment %}<li {% if page.url == '/mp2/index.html' %}class="active"{% endif %}><a href="/mp2/">MP2</a></li>{% endcomment %}
+                <li {% if page.url contains '/mp1/index.html' %}class="active"{% endif %}><a href="{{ site.baseurl }}/mp1/">MP1</a></li>
+                {% comment %}<li {% if page.url contains '/mp2/index.html' %}class="active"{% endif %}><a href="/mp2/">MP2</a></li>{% endcomment %}
             </ul>
         </div><!--/.nav-collapse -->
     </div>
