@@ -147,3 +147,5 @@ function displayWord(i) {
     lineChart("#line", data[i].freqs);
     $('#word').text(data[i].word);
 }
+
+main();

@@ -1,9 +1,16 @@
 body {
-  padding-top: 50px;
+    padding-top: 50px;
 }
+
 .greeting {
-  padding: 40px 15px;
-  text-align: center;
+    padding: 40px 15px;
+    text-align: center;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #content {
