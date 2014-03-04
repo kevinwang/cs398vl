@@ -9,6 +9,9 @@
 
 <!-- custom CSS rules to make your visualization pretty! -->
 <link rel="stylesheet" href="{{ site.baseurl }}/css/custom.css" type="text/css" media="screen" />
+{% if page.css %}
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/{{ page.css }}" type="text/css" media="screen" />
+{% endif %}
 </head>
 <body>
 <!-- Navigation bar -->

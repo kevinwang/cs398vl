@@ -3,7 +3,7 @@ function main() {
 }
 
 function drawTree(id) {
-    var radius = 960 / 2;
+    var radius = 960 / 2.25;
 
     var cluster = d3.layout.cluster()
         .size([360, radius - 120]);

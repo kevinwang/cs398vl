@@ -20,9 +20,20 @@ with open('../corpora/countries.txt') as countries_list:
     for country in countries_list:
         countries.add(country.rstrip())
 
-counties['London'] = counties['Greater London']
+# Patch up some holes
+del towns['Battle']
+del towns['Street']
+del towns['Ware']
+del towns['Derby']
+del towns['Stone']
+countries.remove('Guinea')
+towns['London'] = 'Greater London'
+towns['Stonehenge'] = 'Wiltshire'
 counties['Camelot'] = 'England'
 counties['Siberia'] = 'Russia'
+counties['Paris'] = 'France'
+countries.add('Indies')
+countries.add('Flanders')
 
 out_data = {'name': 'The World', 'children': []}
 
@@ -41,6 +52,10 @@ for w in words:
     elif w in countries:
         ofk_countries.add(w)
 
+# Add "America" because "American" shows up twice which is interesting
+ofk_countries.add('America')
+
+# Confound this infernal JSON structure!
 for c in ofk_countries:
     out_data['children'].append({'name': c})
 
