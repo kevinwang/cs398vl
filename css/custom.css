@@ -17,6 +17,8 @@ img.center {
     margin:auto;
 }
 
+/* MP1 */
+
 .bar {
     cursor: pointer;
 }
@@ -53,4 +55,28 @@ img.center {
     fill: none;
     stroke: steelblue;
     stroke-width: 2.5px;
+}
+
+/* MP2 */
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.node {
+    font: 10px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
+
+#mp2 > svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
