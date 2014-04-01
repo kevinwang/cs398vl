@@ -32,7 +32,10 @@ def generate_adjacency_matrix(paras, characters):
     adjacency_matrix = [[0] * len(characters) for i in characters]
     for i, char_a in enumerate(characters):
         for j, char_b in enumerate(characters):
-            adjacency_matrix[i][j] = len(occurrences[char_a].intersection(occurrences[char_b])) # Yeah sets!
+            co_occurrences = occurrences[char_a].intersection(occurrences[char_b]) # Yeah sets!
+            mean_pos = float(sum(co_occurrences)) / len(co_occurrences) if len(co_occurrences) > 0 else float('nan')
+            mean_pos_normalized = mean_pos / len(paras)
+            adjacency_matrix[i][j] = {'freq': len(co_occurrences), 'mean_pos': mean_pos_normalized}
     return adjacency_matrix
 
 content = open('../corpora/ofk.txt', 'r').read()
@@ -43,7 +46,7 @@ adjacency_matrix = generate_adjacency_matrix(paras, characters)
 
 out_data = {}
 out_data['nodes'] = [{'name': character} for character in characters]
-out_data['links'] = [{'source': i, 'target': j, 'sentiment': 0, 'value': adjacency_matrix[i][j]} for i in range(len(characters)) for j in range(i + 1) if adjacency_matrix[i][j] != 0]
+out_data['links'] = [{'source': i, 'target': j, 'mean_pos': adjacency_matrix[i][j]['mean_pos'], 'value': adjacency_matrix[i][j]['freq']} for i in range(len(characters)) for j in range(i + 1) if adjacency_matrix[i][j]['freq'] != 0]
 
 with open('data/data.json','w') as outfile:
-     json.dump(out_data, outfile, sort_keys=True, indent=4, ensure_ascii=False)
+    json.dump(out_data, outfile, sort_keys=True, indent=4, ensure_ascii=False)
