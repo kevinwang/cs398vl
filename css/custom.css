@@ -16,3 +16,7 @@ img.center {
 #content {
     margin:auto;
 }
+
+.subtitle {
+    text-align: center;
+}
