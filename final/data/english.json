@@ -1,0 +1,41 @@
+[
+    {
+        "sects": [
+            {
+                "name": "English", 
+                "percent": 0.8072197141217355
+            }, 
+            {
+                "name": "Non-English", 
+                "percent": 0.19278028587826446
+            }
+        ], 
+        "title": "Finnegans Wake"
+    }, 
+    {
+        "sects": [
+            {
+                "name": "English", 
+                "percent": 0.9483726780620382
+            }, 
+            {
+                "name": "Non-English", 
+                "percent": 0.05162732193796182
+            }
+        ], 
+        "title": "Ulysses"
+    }, 
+    {
+        "sects": [
+            {
+                "name": "English", 
+                "percent": 0.9748042598983264
+            }, 
+            {
+                "name": "Non-English", 
+                "percent": 0.02519574010167358
+            }
+        ], 
+        "title": "The Once and Future King"
+    }
+]

@@ -1,10 +1,14 @@
 var data;
 
 function main() {
-    wordCountChart("#wc")
+    wordCountChart("#wc");
+    percentEnglish('#eng_fw', 0);
+    percentEnglish('#eng_ul', 1);
+    percentEnglish('#eng_ofk', 2);
+    $('#novelty').load('data/novelty.html');
 }
 
-function wordCountChart(id, data) {
+function wordCountChart(id) {
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -37,11 +41,9 @@ function wordCountChart(id, data) {
 
     d3.csv("data/wc.csv", function(error, data) {
         var countNames = d3.keys(data[0]).filter(function(key) { return key !== "Title"; });
-        console.log(countNames);
 
         data.forEach(function(d) {
             d.counts = countNames.map(function(name) { return {name: name, value: +d[name]}; });
-            console.log(d.counts);
         });
 
         x0.domain(data.map(function(d) { return d.Title; }));
@@ -96,6 +98,47 @@ function wordCountChart(id, data) {
         .attr("dy", ".35em")
         .style("text-anchor", "end")
         .text(function(d) { return d; });
+
+    });
+}
+
+function percentEnglish(id, idx) {
+    var width = 250,
+        height = 250,
+        radius = Math.min(width, height) / 2;
+
+    var color = d3.scale.ordinal()
+        .range(["#d0743c", "#a05d56"]);
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.percent; });
+
+    var svg = d3.select(id).append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    d3.json("data/english.json", function(error, data) {
+
+        data[idx].sects.forEach(function(d) {
+            d.name = d.name;
+            d.percent = +d.percent;
+        });
+
+        var g = svg.selectAll(".arc")
+        .data(pie(data[idx].sects))
+        .enter().append("g")
+        .attr("class", "arc");
+
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.name); });
 
     });
 }

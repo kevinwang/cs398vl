@@ -5,13 +5,15 @@ from collections import defaultdict
 import operator
 import matplotlib.pyplot as plt
 import csv
+import json
+from colorsys import hsv_to_rgb
 
 reader = PlaintextCorpusReader('', '.*\.txt')
 d = enchant.Dict('en_GB')
 titles = {
         'finnegans_wake.txt': 'Finnegans Wake',
         'ulysses.txt': 'Ulysses',
-        'ofk.txt': 'Once and Future King'
+        'ofk.txt': 'The Once and Future King'
         }
 
 def get_words(filename):
@@ -64,15 +66,55 @@ def print_info(filename):
     #plt.show()
     print novelty
 
-def write_word_counts(filename):
-    with open(filename, 'w') as file:
+def write_word_counts(outfile):
+    with open(outfile, 'w') as file:
         writer = csv.writer(file, delimiter=',', quotechar='"')
         writer.writerow(['Title', 'Total words', 'Unique words'])
         for filename in ['finnegans_wake.txt', 'ulysses.txt', 'ofk.txt']:
             words = get_words(filename)
             writer.writerow([titles[filename], len(words), num_unique_words(words)])
 
-write_word_counts('data/wc.csv')
+def write_english_percentages(outfile):
+    out_data = []
+    for filename in ['finnegans_wake.txt', 'ulysses.txt', 'ofk.txt']:
+        english_percentage = percent_english(filename)
+        out_data.append({
+            'title': titles[filename],
+            'sects': [
+                {'name': 'English', 'percent': english_percentage},
+                {'name': 'Non-English', 'percent': 1 - english_percentage}
+                ]
+            })
+    with open(outfile, 'w') as file:
+        json.dump(out_data, file, sort_keys=True, indent=4, ensure_ascii=False)
+
+def rgb_to_hex(rgb):
+        return '#%02x%02x%02x' % rgb
+
+def generate_novelty_heatmaps(outfile):
+    with open(outfile, 'w') as file:
+        max_novelties = []
+        novelties = {}
+        for filename in ['finnegans_wake.txt', 'ulysses.txt', 'ofk.txt']:
+            words = get_words(filename)
+            novelty = lexical_novelty(words)
+            max_novelties.append(max(novelty))
+            novelties[filename] = novelty
+
+        print max_novelties
+        max_novelty = max(max_novelties)
+        for filename in ['finnegans_wake.txt', 'ulysses.txt', 'ofk.txt']:
+            file.write('<h3>' + titles[filename] + '</h3>')
+            file.write('<div class="sent" style="padding-bottom:40px">')
+            for chunk in novelties[filename]:
+                chunk /= max_novelty
+                color = rgb_to_hex(hsv_to_rgb((1 - chunk) / 3, 1, 255))
+                file.write('<div class="sentbar" style="height:40px;background:%s;width:4px;float:left;"></div>' % color)
+            file.write('</div>')
+
+#write_word_counts('data/wc.csv')
+#write_english_percentages('data/english.json')
+generate_novelty_heatmaps('data/novelty.html')
 
 #print_info('finnegans_wake.txt')
 #print
