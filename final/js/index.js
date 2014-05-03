@@ -2,9 +2,9 @@ var data;
 
 function main() {
     wordCountChart("#wc");
-    percentEnglish('#eng_fw', 0);
-    percentEnglish('#eng_ul', 1);
-    percentEnglish('#eng_ofk', 2);
+    percentEnglish('#eng_fw', 0, false);
+    percentEnglish('#eng_ul', 1, true);
+    percentEnglish('#eng_ofk', 2, false);
     $('#novelty').load('data/novelty.html');
 }
 
@@ -102,7 +102,7 @@ function wordCountChart(id) {
     });
 }
 
-function percentEnglish(id, idx) {
+function percentEnglish(id, idx, showLegend) {
     var width = 250,
         height = 250,
         radius = Math.min(width, height) / 2;
@@ -139,6 +139,28 @@ function percentEnglish(id, idx) {
     g.append("path")
         .attr("d", arc)
         .style("fill", function(d) { return color(d.data.name); });
+
+    if (showLegend) {
+        var legend = d3.select(id).append("svg")
+        .attr("class", "legend")
+        .attr("width", radius * 2)
+        .attr("height", 30)
+        .selectAll("g")
+        .data(color.domain().slice())
+        .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(" + (25 + i * 100) + ", 10)"; });
+
+        legend.append("rect")
+            .attr("width", 18)
+            .attr("height", 18)
+            .style("fill", color);
+
+        legend.append("text")
+            .attr("x", 24)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .text(function(d) { return d; });
+    }
 
     });
 }
