@@ -101,15 +101,14 @@ def generate_novelty_heatmaps(outfile):
             max_novelties.append(max(novelty))
             novelties[filename] = novelty
 
-        print max_novelties
         max_novelty = max(max_novelties)
         for filename in ['finnegans_wake.txt', 'ulysses.txt', 'ofk.txt']:
             file.write('<h3>' + titles[filename] + '</h3>\n')
             file.write('<div class="sent" style="padding-bottom:40px">\n')
             for chunk in novelties[filename]:
-                chunk /= max_novelty
-                color = rgb_to_hex(hsv_to_rgb((1 - chunk) / 3, 1, 255))
-                file.write('  <div class="sentbar" style="height:40px;background:%s;width:4px;float:left;"></div>\n' % color)
+                chunk_normalized = chunk / max_novelty
+                color = rgb_to_hex(hsv_to_rgb((1 - chunk_normalized) / 3, 1, 255))
+                file.write('  <div class="sentbar" style="height:40px;background:%s;width:4px;float:left;" title="%.1f%%"></div>\n' % (color, chunk * 100))
             file.write('</div>\n')
 
 #write_word_counts('data/wc.csv')
