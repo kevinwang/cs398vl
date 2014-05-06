@@ -140,6 +140,13 @@ function percentEnglish(id, idx, showLegend) {
         .attr("d", arc)
         .style("fill", function(d) { return color(d.data.name); });
 
+    g.append("text")
+        .attr("dy", "3em")
+        .style("text-anchor", "middle")
+        .style("font-size", "20px")
+        .attr("fill", "white")
+        .text(function(d) { if (d.data.name == "English") return (d.data.percent * 100).toFixed(1) + "%"; });
+
     if (showLegend) {
         var legend = d3.select(id).append("svg")
         .attr("class", "legend")
